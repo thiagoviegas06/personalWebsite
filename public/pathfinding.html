@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="background.css">
+  <title>Game AI</title>
+  <style>
+    
+    .video-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .video-thumbnail {
+      text-align: center;
+      max-width: 300px;
+    }
+    .video-thumbnail img {
+      width: 100%;
+      height: auto;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .video-thumbnail:hover img {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      border-color: #4CAF50;
+    }
+    .video-thumbnail h2 {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+      color: green;
+      font-family: 'Share Tech Mono', 'Cascadia Code', Menlo, Monaco, 'Courier New', monospace;
+    }
+    .video-thumbnail p {
+      font-size: 0.9rem;
+      color: #cac7c7;
+      font-family: 'Share Tech Mono', 'Cascadia Code', Menlo, Monaco, 'Courier New', monospace;
+    }
+    .video-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .video-popup iframe {
+      width: 80%;
+      height: 60%;
+      border: none;
+    }
+    .video-popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #fff;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    p{
+      color: white;
+    }
+    h3{
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Game AI Projects</h1>
+</header>
+
+
+<div class="video-gallery">
+  <div class="video-thumbnail" data-video-id="MWy95tscqwg">
+    <img src="https://img.youtube.com/vi/MWy95tscqwg/0.jpg" alt="Steering Behaviors Video">
+    <h2>Steering Behaviors</h2>
+    <p>Simulates 3 different forms of steering techniques: follow, avoid, and path following.</p>
+  </div>
+  <div class="video-thumbnail" data-video-id="F5ACHHs7L38">
+    <img src="https://img.youtube.com/vi/F5ACHHs7L38/0.jpg" alt="Pathfinding Basics Video">
+    <h2>Pathfinding Basics</h2>
+    <p>Boid follows path while avoiding obstacles in the way.</p>
+  </div>
+</div>
+<div class="video-gallery">
+  <div class="video-thumbnail" data-video-id="xauQ2mppyN8">
+    <img src="https://img.youtube.com/vi/xauQ2mppyN8/0.jpg" alt="Obstacle Navigation Video">
+    <h2>A* Pathfinding</h2>
+    <p>A* simulation on top of RTS game, the game is sped up to demonstrate how soldiers find their shortest path to their goal.</p>
+  </div>
+  <div class="video-thumbnail" data-video-id="ev2J3_JdgWI">
+    <img src="https://img.youtube.com/vi/ev2J3_JdgWI/0.jpg" alt="Obstacle Navigation Video">
+    <h2>Behavior Tree</h2>
+    <p>Creates an AI that controls the blue troops using a behavior tree. The tree is structured on a XML file that is parsed and executed on the RTS game.</p>
+  </div>
+  <div class="video-thumbnail" data-video-id="IHi1hZBu_X0">
+    <img src="https://img.youtube.com/vi/IHi1hZBu_X0/0.jpg" alt="Obstacle Navigation Video">
+    <h2>PCG Map Generator</h2>
+    <p>Generates map through game of life logic while also making the game fun to play.</p>
+  </div>
+</div>
+
+<div class="video-popup" id="videoPopup">
+  <button class="close-btn" id="closePopup">×</button>
+  <iframe id="videoFrame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="index.html?mode=portfolio">Portfolio</a>
+  <a href="gamedev.html">GameDev</a>
+  <a href="conway.html">WebDev</a>
+</nav>
+
+<script>
+  const videoThumbnails = document.querySelectorAll('.video-thumbnail');
+  const videoPopup = document.getElementById('videoPopup');
+  const videoFrame = document.getElementById('videoFrame');
+  const closePopup = document.getElementById('closePopup');
+
+  videoThumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', () => {
+      const videoId = thumbnail.getAttribute('data-video-id');
+      videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      videoPopup.style.display = 'flex';
+    });
+  });
+
+  closePopup.addEventListener('click', () => {
+    videoFrame.src = ''; // Stop the video
+    videoPopup.style.display = 'none';
+  });
+
+  videoPopup.addEventListener('click', (e) => {
+    if (e.target === videoPopup) {
+      videoFrame.src = ''; // Stop the video
+      videoPopup.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>

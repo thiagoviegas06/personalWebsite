@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiago's Personal Website</title>
+    <link rel="stylesheet" type="text/css" href="background.css">
+    
+</head>
+
+
+<body>
+    <div class="grid-container">
+        <div class="plane">
+            <div class="grid"></div>
+            <div class="glow"></div>
+        </div>
+        <div class="plane">
+            <div class="grid"></div>
+            <div class="glow"></div>
+        </div>
+    </div>
+    
+    <h1 id="goal"> Thiago Viegas</h1>
+    <br>
+    <nav>
+        <ul id = "mainBar">
+            <a id = "about" href="about.html">About</a>
+            <a id = "contact" href="contact.html">Contact</a>
+        </ul>
+        
+    </nav>
+    <button id ="Portfolio">Portfolio</button>
+
+    <script>
+        function eraser(element, text, i = text.length, speed = 100, callback) {
+            function erase() {
+                if (i >= 0) {
+                    element.innerHTML = text.slice(0, i); // Remove characters from the end
+                    i--; // Decrease the index
+                    setTimeout(erase, speed); // Recursive call
+                } else if (callback) {
+                    callback(); // Invoke the callback after erasing is done
+                }
+            }
+            erase();
+        }
+
+
+        const goal = document.getElementById("goal");
+
+        function Wrapper(element, initText, finalText, callback) {
+            eraser(element, initText, undefined, 100, () => {
+                typeWriter(element, finalText, 0, 100, callback); 
+            });
+        }
+
+        function typeWriter(element, text, i = 0, speed = 100, callback) {
+            function write() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i); // Add characters one by one
+                    i++; // Increase the index
+                    setTimeout(write, speed); // Recursive call
+                } else if (callback) {
+                    callback(); // Invoke callback when done typing
+                }
+            }
+            write();
+        }
+
+
+        
+
+        const portButton = document.getElementById("Portfolio");
+        portButton.addEventListener('click', portfolioListener);
+        let homeFlag = true;
+
+        function portfolioListener(){
+            let navBar = document.getElementById("mainBar");
+            let about = document.getElementById("about");
+            let contact = document.getElementById("contact");
+
+            if(homeFlag){
+                let webDev = document.createElement("a");
+                webDev.setAttribute('id', "webDev");
+                navBar.appendChild(webDev);
+                let webTXT = "WebDev"
+                
+                Wrapper(goal, "Thiago Viegas", "Portfolio", () => {
+                    Wrapper(about, "About", "GameAI", () => {
+                        Wrapper(contact, "Contact", "GameDev", () =>{
+                            typeWriter(webDev, webTXT, 0, 100, () =>{
+                                Wrapper(portButton, "Portfolio", "Home");
+                            });
+                        });
+                    });
+                });
+                
+                about.setAttribute('href', 'pathfinding.html');
+                contact.setAttribute('href', 'gamedev.html');
+                webDev.setAttribute('href', "conway.html");
+
+                homeFlag = false;
+
+            }else{
+                let webElement = document.getElementById("webDev");
+                Wrapper(portButton, "Home", "Portfolio", () =>{
+                    eraser(webElement, "WebDev", 0, 100, () => {
+                        navBar.removeChild(navBar.lastChild);
+                        Wrapper(contact, "GameDev", "Contact", () =>{
+                            Wrapper(about, "GameAI", "About", () =>{
+                                Wrapper(goal, "Portfolio", "Thiago Viegas");
+                            });
+                        });
+                    });
+                });
+
+                about.setAttribute('href', 'about.html');
+                contact.setAttribute('href', 'contact.html');
+
+                homeFlag = true;
+                
+            }
+           
+        }
+
+        // Check URL parameters on load
+        window.addEventListener("load", () => {
+            const params = new URLSearchParams(window.location.search);
+            const mode = params.get("mode");
+
+            if (mode === "portfolio") {
+                activatePortfolioMode();
+            } else {
+                activateHomeMode();
+            }
+        });
+
+        function activatePortfolioMode() {
+            homeFlag = true;
+            portfolioListener(); // Activate Portfolio mode
+        }
+
+        function activateHomeMode() {
+            homeFlag = false;
+            portfolioListener(); // Activate Home mode
+        }
+
+
+
+    </script>
+</body>
+</html>
+
+

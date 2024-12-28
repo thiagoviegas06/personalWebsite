@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="background.css">
+  <style>
+    #checkboard {
+    display: inline-table; /* Allow centering */
+    }
+
+
+    .button-container {
+        display: flex;             
+        justify-content: center;  
+        margin-top: 20px;         
+    }
+
+    button {
+        margin: 5px;             
+        padding: 10px 20px;       
+        font-size: 16px;          
+        width: 120px;             
+        height: 50px;            
+    }
+    
+    h2, h3{
+      color: yellowgreen;
+	    font-family: 'Share Tech Mono', 'Cascadia Code', Menlo, Monaco, 'Courier New', monospace;
+      font-size: 3rem;
+    }
+
+    h3{
+      
+      margin: 10;
+    }
+
+    body {
+  font-family: 'Courier New', Courier, monospace;
+  color: #00FF00; /* Retro green text */
+  background-color: #000; /* Black background */
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+h2, h3, h4 {
+  margin: 20px 0;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 600px;
+  text-align: center;
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin: 20px 0;
+}
+
+.links a {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  border: 1px solid #00FF00;
+  text-decoration: none;
+  color: #00FF00;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.links a:hover {
+  background-color: #00FF00;
+  color: #000;
+}
+
+
+.grid-cell.alive {
+    animation: glow 1s infinite;
+}
+
+@keyframes glow {
+    0% { background-color: #00ff00; }
+    50% { background-color: #004400; }
+    100% { background-color: #00ff00; }
+}
+
+.arrow-container {
+  display: flex;
+  justify-content: space-between;
+  position: fixed; /* Keep arrows fixed to the viewport */
+  top: 50%; /* Vertically center the arrows */
+  width: 100%;
+  transform: translateY(-50%); /* Ensure it's properly centered */
+  z-index: 10;
+  padding: 0 20px; /* Add horizontal padding to prevent overlap */
+  box-sizing: border-box; /* Ensure padding doesn't mess with layout */
+}
+
+.arrow-prev, .arrow-next {
+  background-color: #000;
+  color: #00FF00;
+  border: 2px solid #00FF00;
+  padding: 10px 15px; /* Adjust padding to fit text */
+  font-size: 1.2rem; /* Smaller font size to fit text inside */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.arrow-prev:hover, .arrow-next:hover {
+  background-color: #00FF00;
+  color: #000;
+}
+.project {
+  display: none; /* Hide all projects initially */
+}
+
+.project.visible {
+  display: block; /* Only show the visible project */
+}
+
+.navbar{
+  margin-top: 10;
+}
+
+
+
+
+
+  </style>
+</head>
+<body>
+    <header>
+        <h1>WebDev Projects</h1>
+    </header>
+  
+   <div class="project">
+    <h2>Game of Life Simulation</h2>
+    <div class="table-container">
+      <table id="checkboard"></table>
+    </div>
+  
+    <div class="button-container">
+      <button id="step">Step</button>
+      <button id="go">Go</button>
+      <button id="pause">Pause</button>
+      <button id="reset">Reset</button>
+      <button id="random">Random</button>
+  </div>
+
+    <script src="conway.js"></script>
+    <script src="simulation.js"></script>
+   </div> 
+
+    
+    
+  
+  <div class = "project">
+    <div class="container" >
+      <h2>Restaurant Picker</h2>
+      <p class="description">
+        For this project, I primarily worked on integrating the APIs, including Yelp and Google Maps. Later in the development process, I consolidated the team's work, resolved bugs, and ensured the software functioned seamlessly.
+      </p>
+      <p class="description">
+        If the website is unavailable, you can explore the <a href="https://github.com/thiagoviegas06/CS375Group1" target="_blank">GitHub repository</a> for details on my contributions.
+      </p>
+      <div class="links">
+        <a href="https://github.com/thiagoviegas06/CS375Group1" target="_blank">View on GitHub</a>
+        <a href="https://helpyourgirlfriendpickarestaurant.com/" target="_blank">Visit the Website</a>
+      </div>
+    </div>
+
+  </div>
+  
+
+  <div class="arrow-container">
+    <button class="arrow-prev" id="prev-arrow">&#8592; Prev</button>
+    <button class="arrow-next" id="next-arrow">Next &#8594;</button>
+  </div>
+
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="index.html?mode=portfolio">Portfolio</a>
+    <a href="pathfinding.html">GameAI</a>
+    <a href="gamedev.html">GameDev</a>
+  </nav>
+  
+
+  
+</body>
+
+<script>
+
+  // Get the project sections
+const projects = document.querySelectorAll('.project');
+let currentProjectIndex = 0;
+
+// Function to update the visibility of the projects
+function updateProjectVisibility() {
+  projects.forEach((project, index) => {
+    if (index === currentProjectIndex) {
+      project.classList.add('visible');
+    } else {
+      project.classList.remove('visible');
+    }
+  });
+}
+
+// Event listeners for the navigation buttons
+document.getElementById('prev-arrow').addEventListener('click', () => {
+  currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
+  updateProjectVisibility();
+});
+
+document.getElementById('next-arrow').addEventListener('click', () => {
+  currentProjectIndex = (currentProjectIndex + 1) % projects.length;
+  updateProjectVisibility();
+});
+
+// Initial visibility setup
+updateProjectVisibility();
+
+
+</script>
+</html>
