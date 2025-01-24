@@ -4,29 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thiago's Personal Website</title>
-    <link rel="stylesheet" type="text/css" href="background.css">
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-    <div class="grid-container">
-        <div class="plane">
-            <div class="grid"></div>
-            <div class="glow"></div>
-        </div>
-        <div class="plane">
-            <div class="grid"></div>
-            <div class="glow"></div>
-        </div>
+
+    <div id ="container">
+        <h1 id ="name"> Portfolio </h1>
+        <nav>
+            <a href="pathfinding.html">Game AI</a>
+            <a href="gamedev.html">Game Dev</a>
+            <a href="webdev.html">Web Dev</a>
+        </nav>
+        <nav id="home">
+            <a href="index.html">Home</a>
+        </nav>
     </div>
+    <footer>
+        &copy; 2024 Thiago Viegas. All rights reserved.
+    </footer>
     
-    <h1 id ="goal"> Portfolio </h1>
-    <br>
-    <nav>
-        <a href="pathfinding.html">Game AI Projects</a>
-        <a href="gamedev.html">Game Dev Projects</a>
-        <a href="webdev.html">Web Dev Project</a>
-        <a href="background.html">Home</a>
-    </nav>
+    
     <script>
+        /*
        function eraser(element, text, i = text.length, speed = 200, callback) {
             function erase() {
                 if (i >= 0) {
@@ -56,9 +55,7 @@
         eraser(goal, "Portfolio", undefined, 100, () => {
             typeWriter(goal, "Thiago Viegas");
         });
-        
+        */
     </script>
 </body>
 </html>
-
-
